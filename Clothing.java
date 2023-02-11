@@ -1,4 +1,6 @@
-public class Clothing{
+package Female;
+
+public class Clothing {
     private String color;
     private String size;
     private String gender;
