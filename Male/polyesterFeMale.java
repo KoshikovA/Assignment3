@@ -1,4 +1,4 @@
-package Female;
+package Male;
 
 public class   polyesterFeMale extends classicalOuterwearFemale {
     public polyesterFeMale(String brand,String size, String color, double price, String gender, String season,int amount,String type,String material) {

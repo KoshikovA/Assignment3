@@ -20,7 +20,7 @@ public class Main {
         boolean a = true;
         while (a) {
             System.out.println("Who are you?" + " Choose a number:");
-            System.out.println("1 - User" +  "\n" + "2 - Admin" + " \n" + "3 - Seller");
+            System.out.println("1 - Person.User" +  "\n" + "2 - Person.Admin" + " \n" + "3 - Seller");
             int number = sc.nextInt();
             switch (number) {
                 case 1:
