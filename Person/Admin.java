@@ -42,7 +42,7 @@ public class Admin extends Person implements Showable {
     public int getId() {
         return super.getId();
     }
-    public void showMenu() {
+    public void showMenu(Connection connection) {
         boolean isRunning = true;
         while (isRunning) {
             System.out.println("""

@@ -1,6 +1,6 @@
 package Male;
 
-import Female.Outerwear;
+import BaseClasses.Outerwear;
 
 public class SpringAutumnMale extends Outerwear {
     private String good;

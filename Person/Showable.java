@@ -1,5 +1,7 @@
 package Person;
 
+import java.sql.Connection;
+
 public interface Showable {
-    public void showMenu() throws InterruptedException;
+    public void showMenu(Connection connection) throws InterruptedException;
 }

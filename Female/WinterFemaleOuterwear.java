@@ -1,4 +1,7 @@
 package Female;
+
+import BaseClasses.Outerwear;
+
 public class WinterFemaleOuterwear extends Outerwear {
 
     private String kind;

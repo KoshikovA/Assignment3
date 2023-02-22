@@ -25,6 +25,7 @@ abstract public class Person {
     }
 
     public int getId() {
+        id++;
         return id;
     }
 

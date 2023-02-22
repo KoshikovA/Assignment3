@@ -1,5 +1,7 @@
 package Female;
 
+import BaseClasses.Outerwear;
+
 public class SpringAutumnFemale extends Outerwear {
     private String good;
     public SpringAutumnFemale(String brand, String size, String color, double price, String gender, String season, int amount, String type, String good) {
