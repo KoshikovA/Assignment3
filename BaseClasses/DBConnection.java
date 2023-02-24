@@ -1,11 +1,10 @@
 package BaseClasses;
 
+import Person.Salesman;
 import Person.User;
-import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.ResultSet;
-import com.mysql.jdbc.Statement;
 
-import java.beans.JavaBean;
+
+
 import java.sql.*;
 
 public class DBConnection {
@@ -26,16 +25,17 @@ public class DBConnection {
         }
         return connection;
     }
-    public User insertUser(Connection connection, String username, String password) throws SQLException {
-        if (!IsExists(connection, username)) {
+    public User insertUser(Connection connection, String username, String password, String table) throws SQLException {
+        if (!IsExists(connection, username, password, table)) {
+            System.out.println("This username already exists. Please choose another one");
             return null;
         }
-
         try {
-            String insertUser = " insert into usertable (username, password) values (?, ?)";
+            String insertUser = " insert into usertable (username, password, card) values (?, ?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insertUser);
             insertStatement.setString(1, username);
             insertStatement.setString(2, password);
+            insertStatement.setString(3, "123456789");
             insertStatement.execute();
         }
         catch (SQLException e) {
@@ -45,13 +45,32 @@ public class DBConnection {
         return new User(0, username, password);
     }
 
-    public boolean IsExists(Connection connection, String username) throws SQLException {
+    public Salesman insertSalesman(Connection connection, String username, String password, String companyName, String table) throws SQLException {
+        if (!IsExists(connection, username, password, table)) {
+            return null;
+        }
         try {
-            PreparedStatement checkExist = connection.prepareStatement("SELECT * FROM userutable WHERE username = ?");
+            String insertUser = " insert into salesmantable (Username, passwordd, CompanyName) values (?, ?, ?)";
+            PreparedStatement insertStatement = connection.prepareStatement(insertUser);
+            insertStatement.setString(1, username);
+            insertStatement.setString(2, password);
+            insertStatement.setString(3, companyName);
+            insertStatement.execute();
+        }
+        catch (SQLException e) {
+            System.out.println("Error occurred when inserting user");
+            throw new RuntimeException(e);
+        }
+        return new Salesman(0, username, password, companyName);
+    }
+
+    public boolean IsExists(Connection connection, String username, String password, String table) throws SQLException {
+        try {
+            PreparedStatement checkExist = connection.prepareStatement("SELECT * FROM " + table + " WHERE (username, password) = (?,?)");
             checkExist.setString(1, username);
+            checkExist.setString(2, password);
             ResultSet resultSet = checkExist.executeQuery();
             if (resultSet.next()) {
-                System.out.println("This username already exists. Please choose another one");
                 return false;
             }
         }

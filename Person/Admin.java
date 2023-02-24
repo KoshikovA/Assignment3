@@ -1,6 +1,5 @@
 package Person;
 import java.sql.Connection;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Admin extends Person implements Showable {
@@ -8,12 +7,12 @@ public class Admin extends Person implements Showable {
         super(id, username, password);
     }
 
-    public static boolean isAdmin(String username, String password) {
+    /*public static boolean isAdmin(String username, String password) {
         //database
     }
     public static Admin getInstanceFromDatabase(Connection connection) {
         //get admin from database
-    }
+    }*/
     @Override
     public String getPassword() {
         return super.getPassword();

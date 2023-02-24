@@ -2,6 +2,9 @@ package Person;
 
 import BaseClasses.DBConnection;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +53,7 @@ public class User extends Person implements Showable {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
@@ -76,9 +79,9 @@ public class User extends Person implements Showable {
 
                     //Choosing table
                     if (option == 1) {
-                        table = "jacketDataFull";
+                        table = "jacketdatafull — копия";
                     } else if (option == 2) {
-                        table = "coatData";
+                        table = "coatdatafull";
                     }
                     else {
                         System.out.println("--Undefined option--");
@@ -150,12 +153,23 @@ public class User extends Person implements Showable {
                 case 3:
                     System.out.println("Your balance " + getBalance());
                     System.out.println("Insert credit card to make a transaction");
-                    String creditCard = scanner.nextLine();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                    String creditCard = null;
+                    try {
+                        creditCard = reader.readLine();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    boolean isCorrectCard = true;
                     for (int i = 0; i < creditCard.length();i++) {
                         if (!Character.isDigit(creditCard.charAt(i))) {
                             System.out.println("An error occurred, try again later");
+                            isCorrectCard = false;
                             break;
                         }
+                    }
+                    if (!isCorrectCard) {
+                        break;
                     }
                     dbConnection.insertCreditCard(connection, creditCard);
                     System.out.println("Your card has been inserted successfully");

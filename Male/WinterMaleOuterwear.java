@@ -1,11 +1,11 @@
 package Male;
 
 
-import Female.Outerwear;
+import BaseClasses.Outerwear;
 
-public class winterMaleOuterwear extends Outerwear {
+public class WinterMaleOuterwear extends Outerwear {
     private String kind;
-    public winterMaleOuterwear(String brand,String size, String color, double price, String gender, String season, int amount,String type,String kind) {
+    public WinterMaleOuterwear(String brand, String size, String color, double price, String gender, String season, int amount, String type, String kind) {
         super(brand, size, color, price,"Male","Winter","Down jackets",10);
         this.kind=kind;
     }

@@ -1,11 +1,13 @@
 import BaseClasses.DBConnection;
 import Person.Admin;
+import Person.Salesman;
 import Person.User;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.math.BigDecimal;
+import java.net.URL;
 import java.sql.*;
+import java.util.Calendar;
 import java.util.Scanner;
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -15,7 +17,7 @@ public class Main {
         Connection connection = db.getConnection("Alim", "root", "golubinovka");
         boolean a = true;
         while (a) {
-            System.out.println("Welcome to our BaseClasses.Clothing Store");
+            System.out.println("Welcome to our Clothing Store");
             System.out.println("Please choose an option to get into the system");
             System.out.println("1 - User" +  "\n" + "2 - Admin" + "\n" + "3 - Salesman");
             int number = Integer.parseInt(scanner.next());
@@ -27,25 +29,32 @@ public class Main {
                     option = Integer.parseInt(scanner.next());
                     if (option == 1) {
                         System.out.println("Username:");
-                        String username = scanner.nextLine();
+                        String username = reader.readLine();
                         System.out.println("Password:");
-                        String password = scanner.nextLine();
-                        boolean flag = db.IsExists(connection, username);
-                        if (!flag) {
+                        String password = reader.readLine();
+                        boolean flag = db.IsExists(connection, username, password, "usertable");
+                        if (flag) {
                             continue;
                         }
+
+                        System.out.println("Welcome to the clothing store!");
                         User user = new User(0, username, password);
                         user.showMenu(connection);
                     }
                     else {
                         System.out.println("Username:");
-                        String username = scanner.nextLine();
+                        String username = reader.readLine();
                         System.out.println("Password:");
-                        String password = scanner.nextLine();
-                        User user = db.insertUser(connection, username, password);
+                        String password = reader.readLine();
+                        User user = db.insertUser(connection, username, password, "usertable");
+                        if (user == null) {
+                            Thread.sleep(3000);
+                            break;
+                        }
                         user.showMenu(connection);
                     }
-                    break;/*
+                    break;
+                    /*
                 case 2:
                     String usernameForAdmin, passwordForAdmin;
                     System.out.println("Username:");
@@ -61,21 +70,48 @@ public class Main {
                         System.out.println("Redirecting to the main menu...");
                         Thread.sleep(5000);
                         }
-                    break;
-                case 3:
-                    String usernameForSeller, passwordForSeller;
-                    System.out.println("Username:");
-                    usernameForSeller = scanner.nextLine();
-                    System.out.println("Password:");
-                    passwordForSeller = scanner.nextLine();
-                    if (usernameForSeller.equals()) {
-                        System.out.println("Welcome, good job!");
-                        a = false;
-                    }
-                    else {
-                        System.out.println("You are not a customer");
-                    }
                     break;*/
+                case 3:
+                    System.out.println("1 - Sign in");
+                    System.out.println("2 - Sign up");
+                    option = Integer.parseInt(scanner.next());
+                    if (option == 1) {
+                        String usernameForSalesMan, passwordForSalesMan, companyName;
+                        System.out.println("Username:");
+                        usernameForSalesMan = scanner.nextLine();
+                        System.out.println("Password:");
+                        passwordForSalesMan = scanner.nextLine();
+                        System.out.println("Company name: ");
+                        companyName = scanner.nextLine();
+
+                        boolean flagForSalesman = db.IsExists(connection, usernameForSalesMan, passwordForSalesMan, "salesmantable");
+                        if (!flagForSalesman) {
+                            continue;
+                        }
+                        Salesman saler = new Salesman(0, usernameForSalesMan, passwordForSalesMan, companyName);
+                        saler.showMenu(connection);
+                    }
+                    else if (option == 2) {
+                        String usernameForSalesMan, passwordForSalesMan, companyName;
+                        System.out.println("Username:");
+                        usernameForSalesMan = scanner.nextLine();
+                        System.out.println("Password:");
+                        passwordForSalesMan = scanner.nextLine();
+                        System.out.println("Company name: ");
+                        companyName = scanner.nextLine();
+
+                        Salesman saler = db.insertSalesman(connection, usernameForSalesMan, passwordForSalesMan, companyName, "salesmantable");
+                        saler.showMenu(connection);
+
+                        System.out.println("Congratulate, you have been registered!");
+
+
+
+                }
+                    else {
+                        System.out.println("Invalid option, try again");
+                        continue;
+                    }
                 default:
                     System.out.println("--Invalid option--");
                     System.out.println("Please, try again");

@@ -1,9 +1,9 @@
 package Female;
 
-public class classicalOuterwearFemale extends WinterFemaleOuterwear {
+public class ClassicalOuterwearFemale extends WinterFemaleOuterwear {
 
     private String material;
-    public classicalOuterwearFemale(String brand,String size, String color, double price, String gender, String season, int amount,String type,String kind,String material) {
+    public ClassicalOuterwearFemale(String brand, String size, String color, double price, String gender, String season, int amount, String type, String kind, String material) {
         super(brand, size, color, price, "female", "\n"+
                 "winter","down jackets","classical",10);
         this.material=material;
