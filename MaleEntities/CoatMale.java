@@ -1,9 +1,9 @@
-package Male;
+package MaleEntities;
 
 public class CoatMale extends SpringAutumnMale {
     private String kind;
     public CoatMale(String brand, String size, String color, double price, String gender, String season, int amount, String type, String good, String kind){
-        super(brand, size,color, price,"Male" , "Spring,Autumn", amount, "coat", "coat");
+        super(brand, size,color, price, "MaleEntities", "Spring,Autumn", amount, "coat", "coat");
         this.kind  = kind;
 
     }

@@ -1,4 +1,4 @@
-package Male;
+package MaleEntities;
 
 public class PolyamideMale extends SportsOuterwearMale {
     public PolyamideMale(String brand, String size, String color, double price, String gender, String season, int amount, String type, String material) {

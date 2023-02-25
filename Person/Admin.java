@@ -1,18 +1,40 @@
 package Person;
+import BaseEntities.DBConnection;
+import Interfaces.Showable;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Admin extends Person implements Showable {
-    public Admin(int id, String username, String password) {
-        super(id, username, password);
+    private DBConnection dbConnection = DBConnection.getAccess();
+    private static Admin admin;
+    private Admin(String username, String password) {
+        super(0, username, password);
     }
-
-    /*public static boolean isAdmin(String username, String password) {
-        //database
+    public static Admin getInstance(String username, String password) {
+        if (admin == null) {
+            admin = new Admin(username, password);
+        }
+        return admin;
     }
-    public static Admin getInstanceFromDatabase(Connection connection) {
-        //get admin from database
-    }*/
+    public static Admin getAccess(String username, String password) {
+        try {
+            return admin;
+        }
+        catch (NullPointerException e) {
+            System.out.println("Admin doesn't have an instance yet");
+            throw new RuntimeException(e);
+        }
+    }
+    public static boolean IsAdmin(String username, String password) {
+        String adminUsername = admin.getUsername();
+        String adminPassword = admin.getPassword();
+        return adminUsername.equals(username) && adminPassword.equals(adminPassword);
+    }
     @Override
     public String getPassword() {
         return super.getPassword();
@@ -41,13 +63,15 @@ public class Admin extends Person implements Showable {
     public int getId() {
         return super.getId();
     }
-    public void showMenu(Connection connection) {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    @Override
+    public void showMenu(Connection connection) throws InterruptedException {
         boolean isRunning = true;
         while (isRunning) {
             System.out.println("""
                     --- Admin menu ---
                     1 - Show database
-                    2 - Add another admin
+                    2 - Delete user
                     3 - Delete object
                     4 - Delete salesman
                     5 - Exit
@@ -56,16 +80,58 @@ public class Admin extends Person implements Showable {
             int option = Integer.parseInt(scanner.next());
             switch (option) {
                 case 1:
-                    //database showing
+                    System.out.println("""
+                            Choose table:
+                            1 - Coats
+                            2 - Jackets
+                            """);
+                    int tableID;
+                    String table;
+
+                    try {
+                        tableID = Integer.parseInt(reader.readLine());
+                    }
+                    catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    if (tableID == 1) {
+                        table = "coatdatafull";
+                    }
+                    else {
+                        table = "jacketdatafull — копия";
+                    }
+
+
+                    try {
+                        dbConnection.showTable(connection, table);
+                    }
+                    catch (SQLException e) {
+                        System.out.println("An error occurred when showing table");
+                        throw new RuntimeException(e);
+                    }
                     break;
+
                 case 2:
-                    //database add admin
-                    break;
+                    try {
+                        dbConnection.deleteUser(connection);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 case 3:
-                    //delete object in database
+                    try {
+                        dbConnection.deleteObject(connection);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 case 4:
-                    //delete salesman in database
+                    try {
+                        dbConnection.deleteSalesman(connection);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 case 5:
                     isRunning = false;

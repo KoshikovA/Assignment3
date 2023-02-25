@@ -1,4 +1,4 @@
-package Female;
+package FemaleEntities;
 
 public class ClassicalOuterwearFemale extends WinterFemaleOuterwear {
 

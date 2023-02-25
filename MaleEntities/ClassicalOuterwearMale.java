@@ -1,4 +1,4 @@
-package Male;
+package MaleEntities;
 
 public class ClassicalOuterwearMale extends WinterMaleOuterwear {
     private String material;

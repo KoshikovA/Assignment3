@@ -1,4 +1,4 @@
-package Person;
+package Interfaces;
 
 import java.sql.Connection;
 

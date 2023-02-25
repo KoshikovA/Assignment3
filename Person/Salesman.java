@@ -1,5 +1,7 @@
 package Person;
 
+import Interfaces.Showable;
+
 import java.util.Scanner;
 import java.sql.*;
 

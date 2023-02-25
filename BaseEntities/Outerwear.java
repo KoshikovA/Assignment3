@@ -1,6 +1,4 @@
-package BaseClasses;
-
-import BaseClasses.Clothing;
+package BaseEntities;
 
 public class Outerwear extends Clothing {
         private int amount;

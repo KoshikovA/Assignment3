@@ -1,4 +1,4 @@
-package BaseClasses;
+package BaseEntities;
 
 public class Clothing {
     private String color;

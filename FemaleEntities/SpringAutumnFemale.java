@@ -1,6 +1,6 @@
-package Female;
+package FemaleEntities;
 
-import BaseClasses.Outerwear;
+import BaseEntities.Outerwear;
 
 public class SpringAutumnFemale extends Outerwear {
     private String good;

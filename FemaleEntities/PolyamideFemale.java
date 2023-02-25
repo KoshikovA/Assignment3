@@ -1,4 +1,4 @@
-package Female;
+package FemaleEntities;
 
 public class PolyamideFemale extends OversizeFemaleOuterwear {
     public PolyamideFemale(String brand, String size, String color, double price, String gender, String season, int amount, String type, String kind, String material) {

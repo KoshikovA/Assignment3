@@ -1,20 +1,18 @@
-import BaseClasses.DBConnection;
+import BaseEntities.DBConnection;
 import Person.Admin;
 import Person.Salesman;
 import Person.User;
 
 import java.io.*;
-import java.math.BigDecimal;
-import java.net.URL;
 import java.sql.*;
-import java.util.Calendar;
 import java.util.Scanner;
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     public static void main(String[] args) throws SQLException, IOException, InterruptedException {
-        DBConnection db = new DBConnection();
+        DBConnection db = DBConnection.getInstance();
         Connection connection = db.getConnection("Alim", "root", "golubinovka");
+        Admin admin = Admin.getInstance("admin", "admin");
         boolean a = true;
         while (a) {
             System.out.println("Welcome to our Clothing Store");
@@ -54,23 +52,21 @@ public class Main {
                         user.showMenu(connection);
                     }
                     break;
-                    /*
                 case 2:
                     String usernameForAdmin, passwordForAdmin;
                     System.out.println("Username:");
-                    usernameForAdmin = scanner.nextLine();
+                    usernameForAdmin = reader.readLine();
                     System.out.println("Password:");
-                    passwordForAdmin = scanner.nextLine();
-                    if (Admin.isAdmin(usernameForAdmin, passwordForAdmin)) {
-                        //get admin from database and call menu
-                        Admin.showMenu();
+                    passwordForAdmin = reader.readLine();
+                    if (Admin.IsAdmin(usernameForAdmin, passwordForAdmin)) {
+                        admin.showMenu(connection);
                     }
                     else {
                         System.out.println("You are not an admin");
                         System.out.println("Redirecting to the main menu...");
                         Thread.sleep(5000);
                         }
-                    break;*/
+                    break;
                 case 3:
                     System.out.println("1 - Sign in");
                     System.out.println("2 - Sign up");
@@ -78,18 +74,18 @@ public class Main {
                     if (option == 1) {
                         String usernameForSalesMan, passwordForSalesMan, companyName;
                         System.out.println("Username:");
-                        usernameForSalesMan = scanner.nextLine();
+                        usernameForSalesMan = reader.readLine();
                         System.out.println("Password:");
-                        passwordForSalesMan = scanner.nextLine();
+                        passwordForSalesMan = reader.readLine();
                         System.out.println("Company name: ");
-                        companyName = scanner.nextLine();
+                        companyName = reader.readLine();
 
                         boolean flagForSalesman = db.IsExists(connection, usernameForSalesMan, passwordForSalesMan, "salesmantable");
                         if (!flagForSalesman) {
                             continue;
                         }
-                        Salesman saler = new Salesman(0, usernameForSalesMan, passwordForSalesMan, companyName);
-                        saler.showMenu(connection);
+                        Salesman salesman = new Salesman(0, usernameForSalesMan, passwordForSalesMan, companyName);
+                        salesman.showMenu(connection);
                     }
                     else if (option == 2) {
                         String usernameForSalesMan, passwordForSalesMan, companyName;
@@ -103,9 +99,7 @@ public class Main {
                         Salesman saler = db.insertSalesman(connection, usernameForSalesMan, passwordForSalesMan, companyName, "salesmantable");
                         saler.showMenu(connection);
 
-                        System.out.println("Congratulate, you have been registered!");
-
-
+                        System.out.println("Congratulations! You've been registered!");
 
                 }
                     else {

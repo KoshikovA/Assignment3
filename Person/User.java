@@ -1,6 +1,7 @@
 package Person;
 
-import BaseClasses.DBConnection;
+import BaseEntities.DBConnection;
+import Interfaces.Showable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class User extends Person implements Showable {
-    private DBConnection dbConnection = new DBConnection();
+    private DBConnection dbConnection = DBConnection.getAccess();
     private List<Integer> prices = new ArrayList<>();
     private int balance;
 
